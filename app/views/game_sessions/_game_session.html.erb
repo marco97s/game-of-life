@@ -1,0 +1,8 @@
+<!-- app/views/game_sessions/_game_session.html.erb -->
+<tr>
+  <td><%= game_session.game_states.last.generation %></td>
+  <td><%= game_session.game_states.last.matrix_height %></td>
+  <td><%= game_session.game_states.last.matrix_width %></td>
+  <td><%= game_session.created_at %></td>
+  <td><%= button_to "Load this session", game_play_path, params: {game_session: game_session}, method: :get %></td>
+</tr>

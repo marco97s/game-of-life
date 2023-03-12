@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_11_091022) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_11_113737) do
   create_table "active_sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -20,6 +20,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_091022) do
     t.string "remember_token", null: false
     t.index ["remember_token"], name: "index_active_sessions_on_remember_token", unique: true
     t.index ["user_id"], name: "index_active_sessions_on_user_id"
+  end
+
+  create_table "game_sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_game_sessions_on_user_id"
+  end
+
+  create_table "game_states", force: :cascade do |t|
+    t.integer "game_session_id", null: false
+    t.integer "generation"
+    t.integer "matrix_width"
+    t.integer "matrix_height"
+    t.string "raw_matrix"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_session_id"], name: "index_game_states_on_game_session_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,4 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_091022) do
   end
 
   add_foreign_key "active_sessions", "users", on_delete: :cascade
+  add_foreign_key "game_sessions", "users", on_delete: :cascade
+  add_foreign_key "game_states", "game_sessions", on_delete: :cascade
 end

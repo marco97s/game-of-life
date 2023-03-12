@@ -14,6 +14,7 @@ class User < ApplicationRecord
   validates :unconfirmed_email, format: {with: URI::MailTo::EMAIL_REGEXP, allow_blank: true}
 
   has_many :active_sessions, dependent: :destroy
+  has_many :game_sessions, dependent: :destroy
 
   def send_confirmation_email!
     confirmation_token = generate_confirmation_token

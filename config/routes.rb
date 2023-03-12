@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
   get "login", to: "sessions#new"
   get "private", to: "private#home"
+  get "game", to: "game#main_menu"
+  post "game/create", to: "game#create"
+  get "game/play", to: "game#play"
+  post "game/generate_next", to: "game#generate_next"
   resources :confirmations, only: [:create, :edit, :new], param: :confirmation_token
   resources :passwords, only: [:create, :edit, :new, :update], param: :password_reset_token
   resources :active_sessions, only: [:destroy] do

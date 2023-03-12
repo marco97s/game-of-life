@@ -1,0 +1,28 @@
+<h2>Main menu</h2>
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    Error: <%= msg %>
+  </div>
+<% end %>
+<h3>Start a new game:</h3>
+<%= form_with url: "/game/create", multipart: true do |form| %>
+  <%= file_field_tag :input %>
+  <%= form.submit "Upload" %>
+<% end %>
+<h3>Previous game sessions:</h3>
+<% if @game_sessions.any? %>
+  <table>
+    <thead>
+    <tr>
+      <th>Generation</th>
+      <th>Rows</th>
+      <th>Columns</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= render @game_sessions %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,14 @@
+<h2>Play</h2>
+<p>Current generation: <%= @current_state.generation %></p>
+<% @matrix.to_a.each do |row| %>
+  <div style=" display: table;width: 100%; /*Optional*/table-layout: fixed; /*Optional*/border-spacing: 10px; /*Optional*/">
+    <% row.each do |cell| %>
+      <% if cell == '.' %>
+        <div style="height: 20pt; width: 20pt; display: table-cell; background-color: red"></div>
+      <% else %>
+        <div style="height: 20pt; width: 20pt; display: table-cell; background-color: green"></div>
+      <% end %>
+  <% end %>
+  </div>
+<% end %>
+<%= button_to "Generate next generation", game_generate_next_path, params: {game_session: @game_session}, method: :post %>
