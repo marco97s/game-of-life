@@ -23,9 +23,10 @@
     <%= form.password_field :current_password, required: true %>
   </div>
   <%= form.submit "Update Account" %>
+  <hr>
   <h2>Current Logins</h2>
   <% if @active_sessions.any? %>
-    <%#= button_to "Log out of all other sessions", destroy_all_active_sessions_path, method: :delete %>
+    <%= button_to "Log out of all other sessions", destroy_all_active_sessions_path, method: :delete %>
     <table>
       <thead>
       <tr>

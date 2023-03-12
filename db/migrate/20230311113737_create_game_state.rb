@@ -3,9 +3,9 @@ class CreateGameState < ActiveRecord::Migration[7.0]
     create_table :game_states do |t|
       t.references :game_session, null: false, foreign_key: {on_delete: :cascade}
       t.integer :generation
-      t.integer :matrix_width
-      t.integer :matrix_height
-      t.string :raw_matrix
+      t.integer :grid_width
+      t.integer :grid_height
+      t.string :raw_grid
       t.timestamps
     end
   end

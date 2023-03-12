@@ -6,7 +6,7 @@ class ConfirmationsController < ApplicationController
     if @user.present? && @user.unconfirmed_or_reconfirming?
       confirmation_token = @user.send_confirmation_email!
       if Rails.env.development?
-        redirect_to root_path, notice: "[DEVELOPMENT ENV ONLY] Please follow this link to confirm your account http://loclhost:3000/confirmations/%s/edit [DEVELOPMENT ENV ONLY]" % confirmation_token
+        redirect_to root_path, notice: "[DEVELOPMENT ENV ONLY] Please copy this link into your browser's address bar to confirm your account %s/confirmations/%s/edit [DEVELOPMENT ENV ONLY]" % [root_url, confirmation_token]
         return
       end
       redirect_to root_path, notice: "Check your email for confirmation instructions."

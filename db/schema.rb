@@ -32,9 +32,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_113737) do
   create_table "game_states", force: :cascade do |t|
     t.integer "game_session_id", null: false
     t.integer "generation"
-    t.integer "matrix_width"
-    t.integer "matrix_height"
-    t.string "raw_matrix"
+    t.integer "grid_width"
+    t.integer "grid_height"
+    t.string "raw_grid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_session_id"], name: "index_game_states_on_game_session_id"
