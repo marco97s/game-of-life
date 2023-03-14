@@ -27,8 +27,9 @@ class GameController < ApplicationController
   end
 
   def play
-    p params[:game_session]
+    @started = params[:started]
     @game_session = GameSession.find_by(id: params[:game_session])
+    @game_session_id = params[:game_session]
     @current_state = @game_session.game_states.last
     @grid = extract_grid(
       @current_state.grid_height,
@@ -39,6 +40,7 @@ class GameController < ApplicationController
   end
 
   def generate_next
+    p "game_session_param %s" % params[:game_session]
     game_session = GameSession.find_by(id: params[:game_session])
     current_state = game_session.game_states.last
     grid = extract_grid(
@@ -61,7 +63,7 @@ class GameController < ApplicationController
       raw_grid: raw_next_grid
     )
 
-    redirect_to controller: 'game', action: 'play', game_session: game_session
+    redirect_to controller: 'game', action: 'play', game_session: game_session, started: true
   end
 
 end

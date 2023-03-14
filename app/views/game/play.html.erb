@@ -12,4 +12,28 @@
   <% end %>
   </div>
 <% end %>
-<%= button_to "Start", game_generate_next_path, params: {game_session: @game_session}, method: :post %>
+
+<% if @started%>
+  <div id="countdown"></div>
+<% end %>
+
+<%= button_to "Start", game_generate_next_path, params: {game_session: @game_session}, method: :get, :disabled => @started %>
+<%= button_to "Stop", game_play_path, params: {game_session: @game_session}, method: :get, :disabled => !@started  %>
+
+<script>
+  console.log("<%= @started %>")
+
+  <% if @started %>
+    countdown()
+  <% end %>
+
+  async function countdown() {
+    for (let i = 5; i > 0; i--) {
+        document.getElementById('countdown').innerHTML = i + " seconds until next generation"
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    const generate_next_path = `/game/generate_next?game_session=${'<%= @game_session_id %>'}`
+    window.location = generate_next_path
+  }
+
+</script>
