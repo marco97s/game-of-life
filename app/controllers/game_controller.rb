@@ -27,7 +27,7 @@ class GameController < ApplicationController
   end
 
   def play
-    @started = params[:started]
+    @started = params[:started].nil? ? false : params[:started]
     @game_session = GameSession.find_by(id: params[:game_session])
     @game_session_id = params[:game_session]
     @current_state = @game_session.game_states.last
@@ -40,7 +40,6 @@ class GameController < ApplicationController
   end
 
   def generate_next
-    p "game_session_param %s" % params[:game_session]
     game_session = GameSession.find_by(id: params[:game_session])
     current_state = game_session.game_states.last
     grid = extract_grid(

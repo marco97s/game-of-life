@@ -1,4 +1,5 @@
 <h2>Play</h2>
+<%= link_to "Back", game_path, method: :get %>
 <p>Current generation: <%= @current_state.generation %></p>
 
 <% @grid.to_a.each do |row| %>
@@ -9,31 +10,55 @@
       <% else %>
         <div style="height: 20pt; width: 20pt; display: table-cell; background-color: green"></div>
       <% end %>
-  <% end %>
+    <% end %>
   </div>
 <% end %>
 
-<% if @started%>
-  <div id="countdown"></div>
-<% end %>
+<div id="countdown"></div>
 
-<%= button_to "Start", game_generate_next_path, params: {game_session: @game_session}, method: :get, :disabled => @started %>
-<%= button_to "Stop", game_play_path, params: {game_session: @game_session}, method: :get, :disabled => !@started  %>
+<button id="start_button" onclick="start()">Start</button>
+<button id="stop_button" onclick="stop()">Stop</button>
 
 <script>
-  console.log("<%= @started %>")
+    let started = <%= @started %>
 
-  <% if @started %>
-    countdown()
-  <% end %>
-
-  async function countdown() {
-    for (let i = 5; i > 0; i--) {
-        document.getElementById('countdown').innerHTML = i + " seconds until next generation"
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    if (started) {
+        document.getElementById('start_button').disabled = true
+        document.getElementById('stop_button').disabled = false
+        countdown()
+    } else {
+        document.getElementById('start_button').disabled = false
+        document.getElementById('stop_button').disabled = true
     }
-    const generate_next_path = `/game/generate_next?game_session=${'<%= @game_session_id %>'}`
-    window.location = generate_next_path
-  }
+
+    function start() {
+        started = true
+        document.getElementById('start_button').disabled = true
+        document.getElementById('stop_button').disabled = false
+        countdown()
+    }
+
+    function stop() {
+        started = false
+        document.getElementById('start_button').disabled = false
+        document.getElementById('stop_button').disabled = true
+    }
+
+    async function countdown() {
+        for (let i = 5; i > 0; i--) {
+            if (!started) {
+                document.getElementById('countdown').innerHTML = ''
+                return
+            }
+            document.getElementById('countdown').innerHTML = i + " seconds until next generation"
+            await sleep(1000)
+        }
+        const generate_next_path = `/game/generate_next?game_session=${'<%= @game_session_id %>'}`
+        window.location = generate_next_path
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 </script>
