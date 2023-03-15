@@ -2,6 +2,11 @@
 <%= link_to "Back", game_path, method: :get %>
 <p>Current generation: <%= @current_state.generation %></p>
 
+<p>
+  <span style="color: red">Red </span>cells are dead cells
+  <br>
+  <span style="color: green">Green </span>cells are live cells
+</p>
 <% @grid.to_a.each do |row| %>
   <div style=" display: table;width: 100%; /*Optional*/table-layout: fixed; /*Optional*/border-spacing: 10px; /*Optional*/">
     <% row.each do |cell| %>
@@ -14,7 +19,7 @@
   </div>
 <% end %>
 
-<div id="countdown"></div>
+<p><div id="countdown"></div></p>
 
 <button id="start_button" onclick="start()">Start</button>
 <button id="stop_button" onclick="stop()">Stop</button>
