@@ -6,7 +6,7 @@
 <% end %>
 <h3>Start a new game:</h3>
 <%= form_with url: "/game/create", multipart: true do |form| %>
-  <%= file_field_tag :input %>
+  <%= file_field_tag :input, required: true %>
   <%= form.submit "Upload" %>
 <% end %>
 <h3>Previous game sessions:</h3>
